@@ -47,6 +47,9 @@ RUN apk add \
  && rm -rf /tmp/pgbouncer* \
  && apk del .build-deps
 
+COPY entrypoint.sh /entrypoint.sh
+
 USER postgres
 EXPOSE 5432
+ENTRYPOINT ["/entrypoint.sh"]
 CMD ["/usr/local/bin/pgbouncer"]

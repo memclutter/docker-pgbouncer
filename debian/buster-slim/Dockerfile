@@ -46,6 +46,9 @@ RUN apt-get update -qqy \
  && rm -rf /tmp/pgbouncer* \
  && rm -rf /var/lib/apt/lists/*
 
+COPY --chown=postgres:postgres entrypoint.sh /entrypoint.sh
+
 USER postgres
 EXPOSE 5432
+ENTRYPOINT ["/entrypoint.sh"]
 CMD ["/usr/local/bin/pgbouncer"]
