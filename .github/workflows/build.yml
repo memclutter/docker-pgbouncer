@@ -19,7 +19,7 @@ jobs:
 
       - name: Extract pgbouncer version
         shell: bash
-        run: echo "##[set-output name=pgbouncer_version;]$(echo ${${GITHUB_REF/\/refs\/tags\//}%-p*})"
+        run: echo "##[set-output name=pgbouncer_version;]$(echo ${GITHUB_REF_NAME%-p*})"
         id: extract_pgbouncer_version
 
       - name: Log in to Docker Hub
