@@ -34,6 +34,9 @@ RUN apk add \
       --with-cares \
  && make \
  && make install \
+ # User create \
+ && addgroup -g 70 -S postgres 2> /dev/null \
+ && adduser -u 70 -S -D -H -h /var/lib/postgresql -g "Postgres user" -s /bin/sh -G postgres postgres 2> /dev/null  \
  # Clean
  && cd /tmp \
  && rm -rf /tmp/pgbouncer* \
