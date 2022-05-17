@@ -18,11 +18,13 @@ There are two ways to configure dockerized pgbouncer:
 
 1. Upload config files to container (path `/etc/pgbouncer/pgbouncer.ini` and `/etc/pgbouncer/userlist.txt`)
 2. Set environment variables starting with prefix `PGBOUNCER_INI_*`
-    here are some env vars:
-        - `PGBOUNCER_INI_DATABASE_DSN` - data source name for database, example `postgresql://user:pass@host:port/dbname`
-        - `PGBOUNCER_INI_DATABASE_HOST` - hostname
-        - `PGBOUNCER_INI_DATABASE_USER` - user
-        - `PGBOUNCER_INI_DATABASE_PASSWORD` - password
-        - `PGBOUNCER_INI_DATABASE_NAME` - database name
-        - `PGBOUNCER_INI_POOL_MODE` - set pool mode
-        - etc
+
+Here are some env vars:
+
+- `PGBOUNCER_INI_DATABASE_DSN` - data source name for database, example `postgresql://user:pass@host:port/dbname`
+- `PGBOUNCER_INI_DATABASE_HOST` - hostname
+- `PGBOUNCER_INI_DATABASE_USER` - user
+- `PGBOUNCER_INI_DATABASE_PASSWORD` - password
+- `PGBOUNCER_INI_DATABASE_NAME` - database name
+- `PGBOUNCER_INI_POOL_MODE` - set pool mode
+- etc
