@@ -12,14 +12,17 @@ RUN apk add \
       --virtual .build-deps \
         autoconf \
         c-ares-dev \
-        curl \
         gcc \
         libc-dev \
-        libevent \
         libevent-dev \
         make \
         openssl-dev \
         pkgconfig \
+ && apk add \
+      --no-cache \
+        curl \
+        c-ares \
+        libevent \
  # Download pgbouncer distribution
  && curl \
       -o /tmp/pgbouncer-$PGBOUNCER_VERSION.tar.gz \
@@ -52,4 +55,4 @@ COPY entrypoint.sh /entrypoint.sh
 USER postgres
 EXPOSE 5432
 ENTRYPOINT ["/entrypoint.sh"]
-CMD ["/usr/local/bin/pgbouncer"]
+CMD ["/usr/bin/pgbouncer", "/etc/pgbouncer/pgbouncer.ini"]
