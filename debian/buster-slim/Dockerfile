@@ -1,25 +1,24 @@
-FROM alpine:3.15.4
+FROM debian:buster-slim
 
 # Build args
 ARG PGBOUNCER_VERSION=1.17.0
+
+# Environment vars
+ENV DEBIAN_FRONTEND=noninteractive
 
 # Metadata/labels
 LABEL org.opencontainers.image.authors="memclutter@gmail.com"
 
 # Install build tools
-RUN apk add \
-      --no-cache \
-      --virtual .build-deps \
-        autoconf \
-        c-ares-dev \
+RUN apt-get update -qqy \
+ && apt-get install  \
+      -qqy \
+        build-essential \
         curl \
-        gcc \
-        libc-dev \
-        libevent \
+        libc-ares-dev \
         libevent-dev \
-        make \
-        openssl-dev \
-        pkgconfig \
+        libssl-dev \
+        pkg-config \
  # Download pgbouncer distribution
  && curl \
       -o /tmp/pgbouncer-$PGBOUNCER_VERSION.tar.gz \
@@ -38,14 +37,14 @@ RUN apk add \
  && cp etc/pgbouncer.ini /etc/pgbouncer/pgbouncer.ini.example \
  && cp etc/userlist.txt /etc/pgbouncer/userlist.txt.example \
  && touch /etc/pgbouncer/userlist.txt \
- # User create \
- && addgroup -g 70 -S postgres \
- && adduser -u 70 -S -D -H -h /var/lib/postgresql -g "Postgres user" -s /bin/sh -G postgres postgres \
+  # User create \
+ && addgroup --gid 70 --system postgres \
+ && adduser --uid 70 --system --disabled-password --no-create-home --home /var/lib/postgresql --gecos "Postgres user" --shell /bin/sh --gid 70 postgres \
  && chown -R postgres /var/run/pgbouncer /etc/pgbouncer \
  # Clean
  && cd /tmp \
  && rm -rf /tmp/pgbouncer* \
- && apk del .build-deps
+ && rm -rf /var/lib/apt/lists/*
 
 USER postgres
 EXPOSE 5432

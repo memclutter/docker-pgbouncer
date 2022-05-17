@@ -18,6 +18,8 @@ jobs:
         include:
           - base: "alpine"
             version: "3.15.4"
+          - base: "debian"
+            version: "buster-slim"
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
@@ -43,7 +45,7 @@ jobs:
           flavor: |
             latest=false
             prefix=
-            suffix=-${{ matrix.base }}${{ matrix.version }}
+            suffix=-${{ matrix.base }}-${{ matrix.version }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
