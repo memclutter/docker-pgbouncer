@@ -17,6 +17,11 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v3
 
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+
       - name: Log in to Docker Hub
         uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
         with:
@@ -37,4 +42,4 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
-            PGBOUNCER_VERSION=${{ steps.meta.output.tags }}
+            PGBOUNCER_VERSION=${{ steps.extract_branch.outputs.branch }}
