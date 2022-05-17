@@ -41,7 +41,7 @@ jobs:
           tags: |
             type=ref,event=tag
           flavor: |
-            latest=auto
+            latest=false
             prefix=
             suffix=-${{ matrix.base }}${{ matrix.version }}
 
